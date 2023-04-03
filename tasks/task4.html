@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h3>
+        <a href="../index.html"> Назад</a>
+    </h3>
+    <h3>
+        Для розглянутих методів сортування спробувати
+        вивести етапи сортування шляхом виведення відповідних таблиць за зразком.
+    </h3>
+    <script>
+        const arrRandom = new Array(5).fill(0).map(el => getRandomNum(1, 50))
+        const arrRandom2 = [...arrRandom]
+        const arrRandom3 = [...arrRandom]
+        console.log(arrRandom)
+
+        let resultBubbleSort = bubbleSort(arrRandom)
+        let resultShakeSort = shakeSort(arrRandom2)
+        let resultInsertSort = insertSort(arrRandom3)
+        document.write(`
+            Сортування бульбашкою <br>
+            <br>${resultBubbleSort}<br>
+            Сортування змішуванням <br>
+            <br>${resultShakeSort}<br>
+            Сотування виключеннями <br>
+            <br>${resultInsertSort}<br>
+        `)
+        function bubbleSort(arr) {
+            let printResult = ''
+            let lengthArray = arr.length
+            let changed
+            do{
+                changed = false 
+                for(let i = 1; i < lengthArray; i++){
+                    if(arr[i - 1] > arr[i]) {
+                        [arr[i - 1], arr[i]] = [arr[i], arr[i - 1]]
+                        printResult += `[${arr}]<br>`
+                        changed = true 
+                    }
+                }
+                lengthArray--
+            } while (changed)
+            return printResult 
+        }
+        function shakeSort(array) {
+            let leftIndex = 0
+            let rightIndex = array.length - 1
+            let printResult = ''
+
+            while (leftIndex < rightIndex){
+                for (let k = leftIndex; k < rightIndex; k++){
+                    if (array[k] > array[k + 1]) {
+                        [array[k], array[k + 1]] = [array[k + 1], array[k]]
+                        printResult += `[${array}]<br>`
+                    }
+                }
+                rightIndex--;
+                for (let k = rightIndex; k > leftIndex; k--){
+                    if (array[k] < array[k - 1]) {
+                        [array[k], array[k - 1]] = [array[k - 1], array[k]]
+                        printResult += `[${array}]<br>`
+                    }
+                }
+                leftIndex++;
+            }
+            return printResult
+        }
+        function  insertSort(arr) {
+            let printResult = ''
+            for(let a = 1; a < arr.length; a++){
+                const currentElement = arr[a]
+                let i = a - 1
+                while (i >= 0 && arr[i] > currentElement){
+                    [arr[i], arr[i + 1]] = [arr[i + 1], arr[i]]
+                    i = i - 1
+                    printResult += `[${arr}]<br>`
+                }
+            }
+            return printResult
+        }
+        function getRandomNum(minV, maxV) {
+            return Math.floor(Math.random() * (maxV - minV + 1)) + minV
+        }
+    </script>
+</body>
+</html>

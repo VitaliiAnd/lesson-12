@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h3>
+        <a href="../index.html"> Назад</a>
+    </h3>
+    <h3>
+        Дано масив 30 випадкових цілих чисел. Підрахувати 
+        скільки було обмінів під час сортування змішуванням.
+    </h3>
+    <script>
+        const arrRandom = new Array(30).fill(0).map(el => getRandomNumber(1, 50))
+        const resultShakerSort = shakerSort(arrRandom)
+
+        document.write(`Кількість обмінів${resultShakerSort}`)
+
+        function shakerSort(array) {
+            let leftIndex = 0
+            let rightIndex = array.length - 1
+            let exchangeNumber = 0
+
+            while (leftIndex < rightIndex){
+                for (let idx = leftIndex; idx < rightIndex; idx++){
+                    if(array[idx] > array[idx + 1]){
+                        [array[idx], array[idx + 1]] = [array[idx + 1], array[idx]]
+                        exchangeNumber++
+                    }
+                }
+                rightIndex--;
+                for (let idx = rightIndex; idx > leftIndex; idx--){
+                    if(array[idx] < array[idx - 1]){
+                        [array[idx], array[idx - 1]] = [array[idx - 1], array[idx]]
+                        exchangeNumber++
+                    }
+                }
+                leftIndex++
+            }
+            return exchangeNumber
+        }
+        function getRandomNumber(minV, maxV) {
+            return Math.floor(Math.random() * (maxV - minV + 1)) + minV
+        }
+    </script>
+</body>
+</html>
